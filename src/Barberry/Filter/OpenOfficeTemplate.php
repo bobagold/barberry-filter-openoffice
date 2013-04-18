@@ -65,6 +65,15 @@ class OpenOfficeTemplate implements FilterInterface {
             }
         }
 
+        $this->tbs->LoadTemplate('#styles.xml');
+        foreach ($vars as $key => $val) {
+            if (is_array($val)) {
+                $this->tbs->MergeBlock($key, isset($val[0]) ? $val : array());
+            } else {
+                $this->tbs->MergeField($key, $val);
+            }
+        }
+
         $this->tbs->Show(OPENTBS_STRING);
 
         foreach ($tempFileNames as $filename) {
